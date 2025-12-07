@@ -1,0 +1,197 @@
+% !TeX root = layex_full.tex
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{cite}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{url}
+\usepackage[a4paper,margin=1.5cm]{geometry}
+\usepackage{parskip}
+\raggedbottom
+% Compact section and item spacing
+\usepackage{titlesec}
+    \titlespacing*{\section}{0pt}{1.5ex plus 0.5ex minus .2ex}{1ex plus .2ex}
+    \titlespacing*{\subsection}{0pt}{1.2ex plus 0.5ex minus .2ex}{0.8ex plus .2ex}
+\setlength{\itemsep}{0.2em}
+\setlength{\parskip}{0.3em}
+
+\usepackage{float}
+
+\title{Technical Report: Evaluation and Selection of Simulators for the SkyVision Multi-Drone Project}
+\author{Ahmed, Belal, Abdllah, Ammar, Yousef \\ Al Alamein International University, New Alamein City, Egypt}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This technical report documents our evaluation process and findings regarding several open-source simulators and middleware for the SkyVision multi-drone project. We systematically explored Gazebo, AirSim, and Isaac Sim as our simulators, and PX4, QGroundControl, and ROS2 as middleware, comparing their features, integration complexity, sensor and physics realism, and suitability for collaborative mapping and control tasks specific to SkyVision. The report details our hands-on experiments, highlights the strengths and limitations of each platform, and explains our decision to adopt AirSim with ROS2 as the foundation for SkyVision's simulation and development work. Our experience aims to guide other drone researchers and students in selecting appropriate simulation tools for aerial robotics projects.
+\end{abstract}
+
+\section{Introduction}
+SkyVision is a specialized graduation project in collaboration with JMU, focused on developing an autonomous swarm of Unmanned Aerial Vehicles (UAVs) for rapid disaster response. The system leverages Artificial Intelligence to coordinate multiple drones for search-and-rescue operations, utilizing real-time Computer Vision (CV) and Simultaneous Localization and Mapping (SLAM).
+
+This report documents the selection, configuration, and evaluation of the simulation environment used to develop and test SkyVision before physical deployment.
+
+\section{Project Requirements}
+To successfully simulate the SkyVision swarm, the simulation platform needed to meet specific criteria:
+\begin{itemize}
+    \item \textbf{Multi-Vehicle Support:} Capability to spawn and control multiple drones simultaneously (swarm functionality).
+    \item \textbf{ROS2 Integration:} Native compatibility with ROS2 (Humble/Jazzy) for communication between agents. We are currently using Humble for better compatibility.
+    \item \textbf{Sensor Simulation:} High-fidelity simulation of RGB cameras, LiDAR, and IMUs for Computer Vision and SLAM tasks.
+    \item \textbf{Physics Fidelity:} Accurate flight dynamics compatible with the PX4 Autopilot stack.
+    \item \textbf{Customizability:} Ability to modify drone models (e.g., Holybro X500) and environments (disaster scenarios).
+    \item \textbf{Visualization:} Real-time visualization of drone states, sensor data, and mapping results.
+    \item \textbf{AI and Machine Learning:} Support for advanced AI workflows, including:
+        \begin{itemize}
+            \item Computer Vision (CV) for perception and mapping
+            \item Reinforcement Learning (RL) for autonomous navigation and control
+            \item Federated Learning for distributed model training across multiple drones
+            \item Large Language Model (LLM) integration for advanced decision-making or mission planning
+        \end{itemize}
+    \item \textbf{Middleware Flexibility:} Ability to integrate with a wide range of middleware, including ROS2, PX4, MAVSDK, QGroundControl, and potentially DDS or other robotics frameworks.
+\end{itemize}
+
+\section{Simulator and Middleware Options}
+We evaluated three primary candidates for the SkyVision simulators:
+\begin{itemize}
+    \item \textbf{AirSim:} Built on Unreal Engine by Microsoft, offering photorealistic rendering and APIs for controlling drones.\\
+    \textbf{Pros:} Extremely high visual fidelity (great for CV).\\
+    \textbf{Cons:} Deprecated/archived by Microsoft; heavy resource usage; difficult setup with modern ROS2 versions. Some community-maintained forks are compatible with newer versions of Unreal and ROS2.
+    \item \textbf{Gazebo (Harmonic):} The open-source standard for robotics simulation, previously known as Ignition. Default simulator for ROS2.\\
+    \textbf{Pros:} Native ROS2 integration; lightweight; official support from PX4 Autopilot; large community.\\
+    \textbf{Cons:} Visuals are less realistic than Unreal Engine (though Harmonic is significantly improved).
+    \item \textbf{NVIDIA Isaac Sim:} Scalable robotics simulation based on NVIDIA Omniverse.\\
+    \textbf{Pros:} Photorealistic physics and visuals; GPU-accelerated.\\
+    \textbf{Cons:} Requires high-end NVIDIA hardware; steeper learning curve for custom drone integration compared to Gazebo.
+\end{itemize}
+
+\section{Middleware}
+For middleware and autopilot, we considered:
+\begin{itemize}
+    \item \textbf{PX4:} Open-source autopilot stack for drones, widely supported in simulation and real hardware.
+    \item \textbf{QGroundControl:} Ground station software for monitoring and controlling PX4-based drones.
+    \item \textbf{ROS2:} Modern robotics middleware for distributed communication, sensor integration, and control.
+    \item \textbf{MAVSDK:} Modern SDK for MAVLink-based drone control, supporting both Python and C++ APIs. Used for programmatic mission control and telemetry.
+    \item \textbf{DDS:} Data Distribution Service, a middleware standard for scalable, real-time, and high-performance data exchange, used in some advanced robotics systems.
+    \item \textbf{Other Options:} We also explored other middleware and APIs as needed for specific AI or distributed learning tasks.
+\end{itemize}
+
+\section{Evaluation Process}
+We compared the simulators and middleware based on the following metrics:
+\begin{itemize}
+    \item \textbf{Integration Ease:} How easily does it connect with PX4, ROS2, and MAVSDK?
+    \item \textbf{Swarm Scalability:} Can it run 3+ drones without crashing the host PC?
+    \item \textbf{Sensor Data:} Ease of accessing camera/LiDAR streams in Python/OpenCV, and compatibility with AI pipelines.
+    \item \textbf{AI Capabilities:} Support for computer vision, reinforcement learning, and custom neural network integration. Ability to run perception and control algorithms efficiently.
+    \item \textbf{Computation Cost:} Resource requirements for running advanced AI tasks (e.g., RL, CV) and multi-agent scenarios.
+    \item \textbf{Long-term Viability:} Is the software actively maintained?
+    \item \textbf{Community Support:} Availability of documentation, forums, and troubleshooting resources.
+\end{itemize}
+
+\section{Installation Guide}
+
+For detailed installation and setup instructions, please refer to the project README and the provided PDF installation guide. These documents cover all steps for setting up the simulation environment, middleware, and dependencies on Ubuntu 22.04 and ROS2 Humble.
+
+	extbf{GitHub Fork:} The latest code and updates for our AirSim-based SkyVision platform are available at: \\ 
+\url{https://github.com/ahmedislamfarouk/AirSim}
+
+
+\section{Final Choice and Rationale}
+After extensive testing and evaluation, we ultimately chose \textbf{AirSim} as our main simulator for SkyVision. The key reasons for this decision are:
+\begin{itemize}
+    \item \textbf{Best Visuals:} AirSim, built on Unreal Engine, provides photorealistic rendering, which is crucial for developing and testing advanced computer vision and AI perception algorithms.
+    \item \textbf{AI and RL Support:} AirSim natively supports reinforcement learning workflows and integration with popular AI frameworks, making it ideal for training and evaluating autonomous behaviors.
+    \item \textbf{Efficient Computation:} While Isaac Sim offers similar AI capabilities, it is much more resource-intensive. AirSim achieves a good balance between performance and realism, making it more accessible for our hardware.
+    \item \textbf{Better Than Gazebo for Vision:} Gazebo Harmonic is excellent for physics and ROS2 integration, but its visuals and AI support lag behind AirSim, especially for vision-based tasks.
+    \item \textbf{GazeboDrone Integration:} AirSim also supports the GazeboDrone plugin, allowing us to leverage Gazebo's physics and multi-drone features within the AirSim environment.
+    \item \textbf{Community Forks:} We COULD USE a community-maintained fork that is much newer and more compatible.
+\end{itemize}
+
+\section{Lambda Server Experiments}
+To scale our experiments and test cloud-based simulation, we attempted to launch both Isaac Sim and AirSim on a Lambda Labs SSH server. This allowed us to:
+\begin{itemize}
+    \item Run heavy AI workloads remotely, including reinforcement learning and multi-agent training.
+    \item Benchmark simulator performance on high-end GPUs and CPUs.
+    \item Test remote visualization and control via SSH and web streaming.
+    \item Identify deployment challenges for cloud-based robotics research.
+\end{itemize}
+
+some success was made but AirSim and Isaac Sim require more specialized hardware and configuration. We are still testing the streaming capabilities to see if this is feasible or not.
+
+
+\section{Project Work Summary}
+This section summarizes the major work completed so far, organized by simulator and platform:
+\subsection{Gazebo}
+\begin{itemize}
+    \item Set up Gazebo Harmonic with PX4 and ROS2 integration for multi-drone simulation.
+    \item Developed and tested custom SDF models for the Holybro X500 frame, including simulated sensors (LiDAR, RGB camera).
+    \item Implemented SITL bridging and swarm launching scripts for multiple drones.
+    \item Used RViz2 and QGroundControl for real-time monitoring and control.
+\end{itemize}
+\subsection{Isaac Sim on Lambda Server}
+\begin{itemize}
+    \item Deployed Isaac Sim on the on-campus Lambda Labs to leverage high-end GPU resources.
+\end{itemize}
+\subsection{AirSim (Main Platform)}
+\begin{itemize}
+    \item Adopted AirSim as the primary simulator for its superior visuals, AI/vision support, and efficient computation.
+    \item Currently working on integrating RTAB-Map SLAM with AirSim and ROS2 for real-time multi-drone mapping and localization. This includes collaborative point cloud generation and visualization in RViz2.
+    \item Integrated AirSim with ROS2, PX4, and MAVSDK for full-stack multi-drone control.
+    \item Developed Python scripts for multi-drone control, path planning, and SLAM integration.
+    \item Implemented and validated LiDAR-based localization and collaborative mapping, enabling multiple drones to build maps together in real time.
+    \item Successfully simulated collaborative mapping missions with 5 drones, using LiDAR for localization and map building.
+    \item Validated sensor data streams (LiDAR, camera) for real-time computer vision and SLAM tasks.
+    \item Added and tested ROS2 topics for sensor data, localization, and control, facilitating seamless integration with our AI and SLAM pipelines.
+    \item Integrated YOLO for real-time object detection and disaster marker identification (snow, rain, fire, etc.).
+    \item Used RViz2 extensively for visualization of drone states, sensor data, and mapping results in AirSim.
+    \item Initiated work on federated learning for distributed model training across drones; this will be detailed in a separate report.
+    \item Planns to use LLMs for advanced mission planning and decision-making.
+    \item Plans to leverage the GazeboDrone plugin for enhanced physics and multi-drone support.
+    \item Documented all workflows and troubleshooting for reproducibility.
+\end{itemize}
+
+\section{Demo and Visualization}
+
+We prepared several demo scenarios to showcase the capabilities of our AirSim-based system. Below are screenshots from our experiments, each illustrating a key aspect of our multi-drone mapping and SLAM workflow:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/workflowwithrtmapslam.png}
+    \caption*{\textbf{RTAB-Map and RViz2 Integration:} This screenshot shows the RTAB-Map GUI (top left) for loop closure detection and odometry, alongside RViz2 (right) visualizing the collaborative point cloud map generated by multiple drones. The bottom panel displays AirSim running the simulated environment with real-time sensor feeds.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/vertical view.png}
+    \caption*{\textbf{Collaborative Mapping in RViz2:} Here, RViz2 displays the colored point cloud map from several drones, with each drone's mapping progress and position labeled. This demonstrates the effectiveness of our multi-agent SLAM pipeline.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/ros2topics.png}
+    \caption*{\textbf{RViz2 Topic Visualization:} The RViz2 topic list shows the various data streams available, including collaborative maps, drone positions, coverage zones, and SLAM outputs from RTAB-Map.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/horizontal view.png}
+    \caption*{\textbf{Multi-Drone Point Cloud Mapping:} A wide-angle view in RViz2 of the point cloud generated by several drones, highlighting the spatial coverage and mapping density achieved in our experiments.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/drones trying to localize and map together.png}
+    \caption*{\textbf{AirSim and RViz2 in Action:} This screenshot shows AirSim simulating a drone swarm in a photorealistic environment (left), while RViz2 (right) visualizes the combined LiDAR data and drone positions.}
+\end{figure}
+
+\section{Conclusion}
+This report summarizes our evaluation and selection of simulation tools for the SkyVision multi-drone project. By choosing Gazebo Harmonic, PX4, and ROS2, we established a robust, scalable, and well-supported simulation environment for developing autonomous drone swarms. Our experience and documentation aim to assist future teams in making informed decisions for aerial robotics research.
+
+\section*{Acknowledgments}
+We thank Al Alamein International University and JMU for their support and collaboration, and the open-source communities behind Gazebo, PX4, ROS2, and AirSim for their invaluable resources.
+
+\end{document}
