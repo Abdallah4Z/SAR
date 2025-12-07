@@ -1,0 +1,13 @@
+batch: 16
+cache: false
+imgsz: 640
+mode: train
+names:
+- person
+nc: 1
+path: /home/abdallah/Coding/drones/data/final_train
+task: detect
+test: images/test
+train: images/train
+val: images/val
+workers: 8
