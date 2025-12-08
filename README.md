@@ -180,6 +180,8 @@ This project represents a unique international collaboration:
 
 ## 🚀 Getting Started
 
+> **Note**: This project is in active development. Some features and components described below are planned and not yet implemented. Check the [Roadmap](#-roadmap) section for current status.
+
 ### Prerequisites
 
 Before setting up the SAR system, ensure you have:
@@ -215,11 +217,13 @@ venv\Scripts\activate
 
 #### 3. Install Dependencies
 
+> **Note**: Dependency files are being created. Check back soon for installation instructions.
+
 ```bash
-# Install core dependencies
+# Install core dependencies (when available)
 pip install -r requirements.txt
 
-# Install development dependencies (optional)
+# Install development dependencies (optional, when available)
 pip install -r requirements-dev.txt
 ```
 
@@ -251,6 +255,8 @@ Configure the system by editing the configuration files:
 ---
 
 ## 💻 Usage
+
+> **Note**: The following commands represent the planned usage interface. Implementation is in progress.
 
 ### Running the System
 
