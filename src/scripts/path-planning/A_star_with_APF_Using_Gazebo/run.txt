@@ -1,0 +1,41 @@
+# ============================================
+# DRONE PATH PLANNING SIMULATION STARTUP
+# ============================================
+
+# Terminal 1 
+cd ~/PX4-Autopilot
+PX4_GZ_MODEL=x500 PX4_SIM_MODEL=gz_x500 ./build/px4_sitl_default/bin/px4
+
+## After 30 seconds run this in  
+# Terminal 2 
+MicroXRCEAgent udp4 -p 8888
+
+# Terminal 3 
+cd ~/drone_px4_ws
+colcon build --packages-select drone_path_planning_px4
+source install/setup.bash
+
+## wait until build finish then 
+
+cd ~/drone_px4_ws
+source install/setup.bash
+export ROS_DOMAIN_ID=0
+ros2 launch drone_path_planning_px4 full_path_planning.launch.py
+
+## Wait 10 secinds then run this in 
+# Terminal 4
+cd ~/PX4-Autopilot
+export ROS_DOMAIN_ID=0
+
+./build/px4_sitl_default/bin/px4-commander arm -f
+sleep 3
+./build/px4_sitl_default/bin/px4-commander takeoff
+sleep 5
+
+ros2 topic pub --once /goal_pose geometry_msgs/msg/PoseStamped "{header: {frame_id: 'map'}, pose: {position: {x: 24.0, y: 24.0, z: -7.0}, orientation: {w: 1.0}}}"
+
+ros2 topic pub --once /drone/start_planning std_msgs/msg/Bool "data: true"
+sleep 2
+
+ros2 topic pub --once /drone/start_navigation std_msgs/msg/Bool "data: true"
+
