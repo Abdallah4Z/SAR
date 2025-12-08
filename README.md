@@ -4,7 +4,7 @@
 
 ### *Autonomous UAV-based Search & Rescue with AI-Powered Detection*
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-TBD-blue.svg)](#-license)
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/Abdallah4Z/SAR)
 [![Status](https://img.shields.io/badge/status-in%20development-yellow)](https://github.com/Abdallah4Z/SAR)
@@ -273,7 +273,7 @@ Access the dashboard at `http://localhost:3000`
 #### Run Simulation Mode
 
 ```bash
-python src/simulation/run_airsim.py --scenario search_rescue
+python simulation/airsim/run_airsim.py --scenario search_rescue
 ```
 
 ### Basic Commands and Operations
@@ -316,7 +316,7 @@ python examples/simulate_mission.py \
 
 **Example 2: Training custom detection model**
 ```bash
-python train.py \
+python examples/train_model.py \
   --dataset data/custom_dataset \
   --model yolov8m \
   --epochs 100
@@ -329,9 +329,8 @@ python train.py \
 ```
 SAR/
 ├── README.md                 # This file
-├── LICENSE                   # License information
 ├── .gitignore               # Git ignore rules
-├── requirements.txt         # Python dependencies
+├── requirements.txt         # Python dependencies (to be created)
 │
 ├── config/                  # Configuration files
 │   ├── drone_config.yaml
@@ -571,7 +570,7 @@ Special thanks to:
 
 ## 📄 License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+This project's license is to be determined. Please contact the project maintainers for licensing information.
 
 ### Third-Party Licenses
 
