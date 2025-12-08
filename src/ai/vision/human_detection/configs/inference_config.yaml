@@ -1,0 +1,31 @@
+
+model_path: './models/trained/combinedV2/best.pt'  
+
+
+source: './data/test'  
+output: './results/combinedV2/predictions'  
+
+
+conf: 0.25 
+iou: 0.45  
+imgsz: 640  
+max_det: 300  
+device: ''  
+
+save_img: True  
+save_txt: True 
+save_conf: True  
+save_crop: False  
+show_labels: True 
+show_conf: True  
+show_boxes: True  
+line_width: 2  
+
+
+vid_stride: 1 
+stream_buffer: False  
+
+agnostic_nms: False  
+classes: None  
+retina_masks: False 
+half: False  

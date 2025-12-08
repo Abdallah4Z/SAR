@@ -1,0 +1,17 @@
+
+path: ./data/final_train  
+train: images/train  
+val: images/val  
+test: images/test  
+
+nc: 1  
+names: ['person']  
+
+task: detect 
+mode: train 
+
+
+imgsz: 640  # Image size
+batch: 16  # Batch size
+workers: 8  # Number of dataloader workers
+cache: False  
