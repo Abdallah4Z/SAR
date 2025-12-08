@@ -1,0 +1,31 @@
+======================================================================
+RRT★ PERFORMANCE METRICS REPORT
+Generated: 2025-11-12 18:32:19
+======================================================================
+
+TIMING ANALYSIS:
+  Planning Time:          10.440 seconds
+  Execution Time:         84.166 seconds
+  Total Time:             100.733 seconds
+
+MEMORY USAGE:
+  Initial Memory:         76.76 MB
+  Peak Memory:            126.62 MB
+  Final Memory:           126.62 MB
+  Memory Increase:        49.86 MB
+
+CPU UTILIZATION:
+  Average CPU:            0.00%
+  Peak CPU:               0.00%
+
+ALGORITHM STATISTICS:
+  Iterations:             1000
+  Nodes Generated:        990
+  Collision Checks:       1000
+  Rewiring Operations:    227
+
+PATH QUALITY:
+  Path Length:            324.66 meters
+  Waypoints:              27
+  Optimal Cost:           324.66
+

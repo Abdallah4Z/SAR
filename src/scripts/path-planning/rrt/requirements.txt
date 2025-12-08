@@ -1,0 +1,19 @@
+# AirSim RRT★ Path Planning Requirements
+
+# AirSim Python API
+airsim>=1.8.1
+
+# Numerical computing
+numpy>=1.21.0
+
+# Scientific computing
+scipy>=1.7.0
+
+# Visualization
+matplotlib>=3.4.0
+
+# Performance monitoring
+psutil>=5.8.0
+
+# Optional: Advanced visualization
+plotly>=5.0.0

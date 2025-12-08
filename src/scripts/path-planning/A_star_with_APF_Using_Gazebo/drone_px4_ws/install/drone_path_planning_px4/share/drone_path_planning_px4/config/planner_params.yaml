@@ -1,0 +1,20 @@
+path_planner_node:
+  ros__parameters:
+    grid_size: 50
+    obstacle_count: 15
+    start_x: 0.0
+    start_y: 0.0
+    goal_x: 40.0
+    goal_y: 40.0
+
+drone_controller_px4:
+  ros__parameters:
+    max_speed: 2.0
+    flight_altitude: 5.0
+    goal_threshold: 2.0
+    control_rate: 10.0
+    
+    # APF parameters
+    attractive_gain: 2.5
+    repulsive_gain: 3.0
+    influence_distance: 6.0
