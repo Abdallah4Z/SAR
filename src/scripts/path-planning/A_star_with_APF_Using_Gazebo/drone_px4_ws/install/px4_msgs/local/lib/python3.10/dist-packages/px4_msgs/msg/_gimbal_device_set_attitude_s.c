@@ -1,1 +1,0 @@
-/home/belal/Downloads/SAR/src/scripts/path-planning/A_star_with_APF_Using_Gazebo/drone_px4_ws/build/px4_msgs/rosidl_generator_py/px4_msgs/msg/_gimbal_device_set_attitude_s.c
